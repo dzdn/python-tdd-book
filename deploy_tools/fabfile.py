@@ -3,10 +3,10 @@ import random
 from fabric.contrib.files import append, exists
 from fabric.api import cd, env, local, run
 
-REPO_URL = 'https://github.com/dzdz/python-tdd-book.git'
+REPO_URL = 'git@github.com:dzdn/python-tdd-book.git'
 
 def deploy():
-    site_folder = f'{/env.user}/{env.host}'
+    site_folder = f'/{env.user}/{env.host}'
     run(f'mkdir -p {site_folder}')
     with cd(site_folder):
         _get_latest_source()
@@ -34,7 +34,7 @@ def _create_or_update_dotenv():
     current_contents = run('cat .env')
     if 'DJANGO_SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(
-            abcdefghijklmnopqrstuvwxyz0123456789', k=50
+            'abcdefghijklmnopqrstuvwxyz0123456789', k=50
         ))
         append('.env', f'DJANGO_SECRET_KEY={new_secret}')
 
